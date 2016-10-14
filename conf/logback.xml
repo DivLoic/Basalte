@@ -1,0 +1,21 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yy/MM/dd HH:mm:ss} [%-5level] (%file:%line\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOG" class="ch.qos.logback.core.FileAppender">
+        <file>logs/out.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yy/MM/dd HH:mm:ss} [%-5level] (%file:%line\) - %msg%n</pattern>
+        </encoder>
+    </appender>s
+
+    <root level="info" additivity="true">
+        <appender-ref ref="LOG" />
+    </root>
+
+</configuration>

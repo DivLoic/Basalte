@@ -14,7 +14,8 @@
         </encoder>
     </appender>s
 
-    <root level="info" additivity="true">
+    <root level="info" additivity="false">
+        <appender-ref ref="STDOUT" />
         <appender-ref ref="LOG" />
     </root>
 

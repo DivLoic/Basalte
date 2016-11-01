@@ -1,6 +1,6 @@
-@(title: String = "Home", user: String)
+@(title: String = "Home", user: String)(implicit session : Session)
 
-@template(title){
+@template(title)(session){
     <div class="container">
         <div class="row front" id="">
             <div class="col-sm-offset-2 col-sm-8">

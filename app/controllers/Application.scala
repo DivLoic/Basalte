@@ -1,17 +1,26 @@
 package controllers
 
-import play.api._
+import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._
+import DataForm.LoginData
+import play.api.Play.current
+import play.api.i18n.Messages.Implicits._
 
 class Application extends Controller {
 
-  case class LoginData(login: String, password: String, remember: Boolean)
+  val loginForm: Form[LoginData] = Form(
+    mapping(
+      "login" -> email,
+      "password" -> nonEmptyText(minLength=6),
+      "remember" -> boolean
+    )(LoginData.apply)(LoginData.unapply)
+  )
 
-  def index = Action {
+  /*def index = Action {
     Ok(views.html.index("Your new application is ready."))
-  }
+  }*/
 
   /**
     * Render the login form
@@ -19,45 +28,26 @@ class Application extends Controller {
     */
   def login = Action {
 
-    case class LoginData(login: String, password: String, remember: Boolean)
-
-    val loginForm = Form(
-      mapping(
-        "login" -> email,
-        "password" -> nonEmptyText(minLength=6),
-        "remember" -> boolean
-      )(LoginData.apply)(LoginData.unapply)
-    )
-
     Ok(views.html.loginform(loginForm))
+
   }
 
-  /**
-    * Parce the content of a form & connect the user
-    * @return
-    */
-  def connection = Action {
 
-    case class LoginData(login: String, password: String, remember: Boolean)
+  def connection = Action { implicit request =>
 
-    val loginForm = Form(
-      mapping(
-        "login" -> email,
-        "password" -> nonEmptyText(minLength=6),
-        "remember" -> boolean
-      )(LoginData.apply)(LoginData.unapply)
-    )
-
-    loginForm.fold(
+    loginForm.bindFromRequest.fold(
       error => {
+        Logger error s"Invalid login-form for: ${error.data("login")}"
         BadRequest(views.html.loginform(loginForm))
       },
-
       data => {
+        Logger info s"the user email : ${data.login}"
+        Logger info s"the user passw : ${data.password}"
+        Logger info s"the user keepflag : ${data.remember}"
 
-        Logger info "the user email : $data.login"
-        Logger info "the user passw : $data.password"
-        Redirect(routes.Application.index())
+        Redirect(routes.Home.index()).withSession(
+          "user" -> data.login, "connected" -> "true"
+        )
       }
     )
   }

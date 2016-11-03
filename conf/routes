@@ -3,10 +3,11 @@
 # ~~~~
 
 # Home page
-#GET     /                           controllers.Application.index
-GET     /                           controllers.Home.index
-GET     /home                       controllers.Home.index
+#GET    /                           controllers.Application.index
+GET     /                           controllers.Application.home
+GET     /home                       controllers.Application.home
 GET     /login                      controllers.Application.login
+GET     /logout                     controllers.Application.logout
 GET     /admin                      controllers.Default.todo
 GET     /school                     controllers.Default.todo
 GET     /student                    controllers.Default.todo

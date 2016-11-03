@@ -7,4 +7,5 @@ package controllers
 object DataForm {
 
   case class LoginData(login:String, password:String, remember: Boolean)
+
 }

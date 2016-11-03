@@ -1,4 +1,5 @@
-@(session: Session)
+@()(implicit session: Session)
+
 <head>
     <div>
         <nav class="navbar navbar-default">
@@ -12,11 +13,14 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/login">login</a></li>
-                        <li><a href="/login">userA</a></li>
+                    @if(session.get("connected")){
+                        <li><a href="/profile">@session.get("user")</a></li>
                         <li><a href="/logout">
                             <i class="fa fa-power-off"  aria-hidden="true"></i>
                         </a></li>
+                    } else {
+                        <li><a href="/login">Login</a></li>
+                    }
                 </ul>
             </div>
         </nav>

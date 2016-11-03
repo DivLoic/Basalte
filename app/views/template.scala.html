@@ -1,4 +1,4 @@
-@(title: String)(session: Session)(body: Html)
+@(title: String)(body: Html)(implicit session: Session = null)
 
 <!DOCTYPE html>
 
@@ -15,7 +15,7 @@
 
     </head>
     <body>
-        @header(session)
+        @header()
         @body
         @footer()
     </body>
